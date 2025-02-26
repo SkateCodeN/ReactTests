@@ -27,7 +27,7 @@ const AddTask = ({addNewTask}) => {
 
 
     return (
-        <div>
+        <div style={styles.addContainer}>
             <input
                 type="text"
                 onChange={handleNewTaskInput}
@@ -38,11 +38,24 @@ const AddTask = ({addNewTask}) => {
             <button
                 onClick={handleTaskAdd}
                 type="button"
+                style={styles.addButton}
             >
-                Add...
+                Add
             </button>
         </div>
     )
+}
+
+const styles = {
+    addButton:{
+        backgroundColor:"blue",
+
+    },
+    addContainer:{
+        display:"flex",
+        padding:"20px 0",
+        justifyContent:"space-between"
+    }
 }
 
 export default AddTask;

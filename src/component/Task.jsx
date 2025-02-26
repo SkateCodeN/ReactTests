@@ -22,9 +22,7 @@ const Task = ({ task, handleDelete, handleComplete }) => {
                 <button
                     type="button"
                     onClick={handleDeleteClick}
-                    style={
-                        task.completed ? styles.completedTask : styles.deleteButton
-                    }
+                    style={ styles.deleteButton}
                 >
                     X
                 </button>

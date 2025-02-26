@@ -60,7 +60,7 @@ const ToDoList = () => {
 
     return (
         <>
-            <h3>Your Tasks:</h3>
+            <h2>Task Manager</h2>
             <div>
                 <FilterBar
                     currentFilter={currentFilter}
