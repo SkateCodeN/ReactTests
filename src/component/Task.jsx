@@ -1,7 +1,6 @@
 const Task = ({ task, handleDelete, handleComplete }) => {
 
     const handleDeleteClick = () => {
-        //alert("Delete was clicked on item id" + task.id);
 
         handleDelete(task.id);
     }
@@ -38,15 +37,7 @@ const Task = ({ task, handleDelete, handleComplete }) => {
                 >
                     C
                 </button>
-                <button
-                    type="button"
-                    onClick={handleDeleteClick}
-                    style={
-                        task.completed ? styles.saveButton : styles.completedTask
-                    }
-                >
-                    Save
-                </button>
+                
             </div>
         </div>
     )

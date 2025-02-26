@@ -1,22 +1,5 @@
-const FilterBar =({ tasks,handleStateChange}) =>{
+const FilterBar =({ currentFilter,onFilterChange}) =>{
 
-     // when the user clicks the filter section for displaying all the completed 
-    //tasks
-    const getCompletedTasks = () =>{
-        const completedTasks = tasks.filter( (task) => task.completed);
-        handleStateChange(completedTasks);
-    }
-
-    //display all the active only aka the ones where its not completed
-    const getActiveTasks= () => {
-        const activeTasks = tasks.filter( (task) => !task.completed);
-        handleStateChange(activeTasks);
-    }
-
-    // Get all the tasks
-    const getAllTasks = () => {
-        handleStateChange(tasks);
-    }
     return (
         <div style={styles.filterContainer} >
             <h5>Filters</h5>
@@ -24,8 +7,8 @@ const FilterBar =({ tasks,handleStateChange}) =>{
                     <li>
                         <button 
                             type="button"
-                            //onClick={handleAllClick} 
-                            onClick={getAllTasks}
+                            style={currentFilter === "all" ? styles.activeButton: null}
+                            onClick={() => onFilterChange("all")}
                         >
                             A
                         </button>
@@ -33,8 +16,8 @@ const FilterBar =({ tasks,handleStateChange}) =>{
                     <li>
                         <button 
                             type="button"
-                            //onClick={handleActiveClick}
-                            onClick={getActiveTasks}
+                            style={currentFilter === "active" ? styles.activeButton: null}
+                            onClick={() => onFilterChange("active")}
                         >
                             Ac
                         </button>
@@ -42,8 +25,8 @@ const FilterBar =({ tasks,handleStateChange}) =>{
                     <li>
                         <button 
                             type="button"
-                            //onClick={handleCompleteClick}
-                            onClick={getCompletedTasks}
+                            style={currentFilter === "completed" ? styles.activeButton: null}
+                            onClick={() => onFilterChange("completed")}
                         >
                             C
                         </button>
@@ -63,7 +46,13 @@ const styles ={
     filterContainer:{
         display:"flex",
         gap:"5px",
-        alignItems:"center"
+       alignItems:"center"
+    },
+    activeButton:{
+        fontWeight:"bold",
+        textDecoration:"underline",
+        backgroundColor:"blue",
+        
     }
 }
 

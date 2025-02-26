@@ -7,6 +7,7 @@ import AddTask from "./AddTask";
 const ToDoList = () => {
     const [tasks, setTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
+    const [currentFilter, setCurrentFilter] = useState("all");
 
     // Handles deleting a task based on its id
     const updateOnTaskDelete = (id) => {
@@ -16,6 +17,7 @@ const ToDoList = () => {
             }
         })
         setTasks(newTaskList);
+       
     }
 
     //if the user clicks that the task is complete we
@@ -25,12 +27,11 @@ const ToDoList = () => {
         const newTaskList = tasks.filter((task) => {
             if (task.id === id) {
                 task.completed = true;
-                //setCompletedTasks((oldVal) => [...oldVal,task])
             }
             return task;
         })
         setTasks(newTaskList);
-
+        
     }
 
     // This receives tasks state changes based on wha is clicked in 
@@ -42,7 +43,18 @@ const ToDoList = () => {
 
     const updateAndAddNewTask = (task) =>{
         setTasks((tasks) => [...tasks, task]);
+        
     }
+    const handleFilterChange =(newFilter) =>{
+        setCurrentFilter(newFilter)
+    }
+    //Single state point for filtering
+    const filteredTasks = tasks.filter((task) =>{
+        if(currentFilter === "all") return true;
+        if( currentFilter==="active") return !task.completed;
+        if(currentFilter === "completed") return task.completed;
+        return true;
+    });
 
     if (!tasks) return <p>Loading Tasks...</p>
 
@@ -51,14 +63,13 @@ const ToDoList = () => {
             <h3>Your Tasks:</h3>
             <div>
                 <FilterBar
-
-                    handleStateChange={handleTaskStateChange}
-                    tasks={tasks}
+                    currentFilter={currentFilter}
+                    onFilterChange={handleFilterChange}
                 />
             </div>
             <ul>
                 {
-                    tasks.map((taskObj) => (
+                    filteredTasks.map((taskObj) => (
                         <li key={taskObj.id}>
                             <Task
                                 task={taskObj}
@@ -70,14 +81,6 @@ const ToDoList = () => {
             </ul>
 
             <AddTask addNewTask={updateAndAddNewTask} />
-
-            <div>
-                <CompletedTaskList
-                    taskList={completedTasks}
-                    handleDelete={updateOnTaskDelete}
-                    handleComplete={updateOnTaskComplete}
-                />
-            </div>
 
         </>
     )
