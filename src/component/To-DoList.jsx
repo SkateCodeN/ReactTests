@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Task from './Task';
-import CompletedTaskList from "./CompletedTaskList";
 import FilterBar from "./FilterBar";
 import AddTask from "./AddTask";
 
 const ToDoList = () => {
     const [tasks, setTasks] = useState([]);
-    const [completedTasks, setCompletedTasks] = useState([]);
+    
     const [currentFilter, setCurrentFilter] = useState("all");
+
+    // Side effect to save tasks on task change
+    useEffect( () => {
+        
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+        console.log("saved to locslStorage", JSON.stringify(tasks) )
+    },[tasks]);
+
+    useEffect(() => {
+        const storedTasks = localStorage.getItem("tasks");
+        if (storedTasks) {
+          setTasks(JSON.parse(storedTasks));
+        }
+      }, []);
 
     // Handles deleting a task based on its id
     const updateOnTaskDelete = (id) => {
-        const newTaskList = tasks.filter((task) => {
-            if (task.id != id) {
-                return task;
-            }
-        })
-        setTasks(newTaskList);
+    
+        setTasks(tasks.filter(task => task.id !== id));
        
     }
 
@@ -24,21 +33,11 @@ const ToDoList = () => {
     // update the task to update its bool and update state
     // for both the task list and completed list
     const updateOnTaskComplete = (id) => {
-        const newTaskList = tasks.filter((task) => {
-            if (task.id === id) {
-                task.completed = true;
-            }
-            return task;
-        })
-        setTasks(newTaskList);
         
-    }
-
-    // This receives tasks state changes based on wha is clicked in 
-    // the filtering component.
-    const handleTaskStateChange = (filteredTasks) => {
-        setCompletedTasks(filteredTasks);
-        //setTasks(filteredTasks);
+        setTasks(tasks.map(task => 
+            task.id === id ? {...task, completed: true}: task
+        ));
+        
     }
 
     const updateAndAddNewTask = (task) =>{
