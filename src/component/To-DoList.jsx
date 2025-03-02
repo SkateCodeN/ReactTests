@@ -47,6 +47,7 @@ const ToDoList = () => {
     const handleFilterChange =(newFilter) =>{
         setCurrentFilter(newFilter)
     }
+    
     //Single state point for filtering
     const filteredTasks = tasks.filter((task) =>{
         if(currentFilter === "all") return true;

@@ -15,7 +15,7 @@ const useTodoList = (initialTasks = []) =>{
         ))
     }
 
-    const deleteTask = () => {
+    const deleteTask = (id) => {
         setTasks((prev) => prev.filter( (task) => task.id !== id));
     }
 

@@ -4,6 +4,7 @@ import './App.css'
 
 import Counter from './component/Counter'
 import ToDoList from './component/To-DoList'
+import TodoList from './component/TodoList'
 
 function App() {
 
@@ -18,6 +19,11 @@ function App() {
       <div className='test-Container'>
         My Task Component
         <ToDoList />
+      </div>
+
+      <div className='test-container'>
+        Task Component 2.0
+        <TodoList />
       </div>
     </>
   )
